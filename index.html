@@ -4,133 +4,163 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TERCER TIEMPO | Juegos de fútbol</title>
-
-  <!-- Fuentes -->
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
-
+  
+  <!-- Preconnect para optimización -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Fuentes optimizadas -->
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+  
   <!-- Estilos -->
   <link rel="stylesheet" href="style.css">
-
-  <!-- PWA / Meta -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0b78b6">
+  
+  <!-- PWA / Meta optimizado -->
+  <meta name="description" content="Tercer Tiempo - Los mejores minijuegos de fútbol para tu juntada. Ruleta Futbolera y ¿Quién Miente? te esperan.">
+  <meta name="theme-color" content="#4BC55D">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="img/iconoquienmiente.png">
+  <meta name="apple-mobile-web-app-title" content="Tercer Tiempo">
+  
+  <!-- Favicon optimizado -->
+  <link rel="icon" type="image/png" sizes="32x32" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%234BC55D'/><text x='50' y='60' font-size='40' text-anchor='middle' fill='white'>⚽</text></svg>">
 </head>
 <body>
 
+  <!-- Header moderno con glassmorphism -->
   <header class="site-header">
     <div class="header-inner">
       <div class="brand">
-        <img src="img/iconoquienmiente.png" alt="Icono Tercer Tiempo" class="brand-icon" />
-        <div>
+        <div class="brand-icon">
+          <svg viewBox="0 0 100 100" class="logo-svg">
+            <circle cx="50" cy="50" r="45" fill="var(--accent)"/>
+            <text x="50" y="65" font-size="35" text-anchor="middle" fill="white">⚽</text>
+          </svg>
+        </div>
+        <div class="brand-text">
           <h1 class="app-title">TERCER TIEMPO</h1>
           <p class="subtitle">Juegos de fútbol para la juntada</p>
         </div>
       </div>
 
       <div class="header-actions">
-        <button id="btnTema" class="action-btn" aria-pressed="false" title="Cambiar tema">🌙</button>
-        <button id="btnAyuda" class="help-button" aria-label="Ayuda">?</button>
+        <button id="btnTema" class="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema">
+          <span class="theme-icon">🌙</span>
+        </button>
+        <button id="btnAyuda" class="help-button" aria-label="Ayuda" title="Ayuda">
+          <span>?</span>
+        </button>
       </div>
     </div>
   </header>
 
-  <main id="main-container" class="container">
+  <!-- Contenido principal -->
+  <main class="main-container">
+    
+    <!-- Pantalla principal: selector de juegos -->
+    <section class="game-selector" role="main">
+      <div class="welcome-section">
+        <h2 class="section-title">¡Elegí tu juego!</h2>
+        <p class="section-description">Diversión futbolera garantizada para toda la juntada</p>
+      </div>
 
-    <!-- Pantalla: selector de juegos -->
-    <section id="pantalla-selector-juegos" class="pantalla activa" aria-live="polite">
-      <h2 class="sr-only">Selector de juegos</h2>
-
-      <div class="cards-grid">
-
-        <article class="game-card" data-game="ruleta" role="button" tabindex="0" aria-label="La Ruleta Futbolera">
-          <div class="card-top">
-            <div class="card-icon">🎡</div>
-            <h3>La Ruleta Futbolera</h3>
+      <!-- Grid de juegos -->
+      <div class="games-grid">
+        
+        <!-- Card: La Ruleta Futbolera -->
+        <article class="game-card" data-game="ruleta">
+          <div class="card-header">
+            <div class="game-icon">🎡</div>
+            <div class="card-badge">Popular</div>
           </div>
-          <p class="description">Arma tu 11 ideal con categorías aleatorias. ¡Caos garantizado!</p>
-          <div class="card-actions">
-            <button class="btn-jugar" id="btnJugarRuleta">JUGAR</button>
+          
+          <div class="card-content">
+            <h3 class="game-title">La Ruleta Futbolera</h3>
+            <p class="game-description">Arma tu 11 ideal con categorías aleatorias. ¡Caos garantizado!</p>
+            
+            <div class="game-stats">
+              <span class="stat">
+                <span class="stat-icon">👥</span>
+                <span>3-22 jugadores</span>
+              </span>
+              <span class="stat">
+                <span class="stat-icon">⏱️</span>
+                <span>15-30 min</span>
+              </span>
+            </div>
+          </div>
+          
+          <div class="card-footer">
+            <button class="play-button" id="btnJugarRuleta">
+              <span class="button-text">JUGAR</span>
+              <span class="button-icon">▶</span>
+            </button>
           </div>
         </article>
 
-        <article class="game-card" data-game="fichaje" role="button" tabindex="0" aria-label="¿Quién Miente?">
-          <div class="card-top">
-            <div class="card-icon">🕵️</div>
-            <h3>¿Quién Miente?</h3>
+        <!-- Card: ¿Quién Miente? -->
+        <article class="game-card" data-game="fichaje">
+          <div class="card-header">
+            <div class="game-icon">🕵️</div>
+            <div class="card-badge">Nuevo</div>
           </div>
-          <p class="description">Descubre al impostor entre las historias.</p>
-          <div class="card-actions">
-            <button class="btn-jugar" id="btnJugarFichaje">JUGAR</button>
+          
+          <div class="card-content">
+            <h3 class="game-title">¿Quién Miente?</h3>
+            <p class="game-description">Descubre al impostor entre las historias futboleras más increíbles.</p>
+            
+            <div class="game-stats">
+              <span class="stat">
+                <span class="stat-icon">👥</span>
+                <span>3-20 jugadores</span>
+              </span>
+              <span class="stat">
+                <span class="stat-icon">⏱️</span>
+                <span>10-20 min</span>
+              </span>
+            </div>
+          </div>
+          
+          <div class="card-footer">
+            <button class="play-button" id="btnJugarFichaje">
+              <span class="button-text">JUGAR</span>
+              <span class="button-icon">▶</span>
+            </button>
           </div>
         </article>
 
-        <!-- Agregá más cards aquí si querés -->
-      </div>
-    </section>
+        <!-- Card placeholder para próximos juegos -->
+        <article class="game-card coming-soon">
+          <div class="card-header">
+            <div class="game-icon">🚀</div>
+          </div>
+          
+          <div class="card-content">
+            <h3 class="game-title">Próximamente</h3>
+            <p class="game-description">Más juegos futboleros están en camino. ¡Mantente atento!</p>
+          </div>
+          
+          <div class="card-footer">
+            <button class="play-button" disabled>
+              <span class="button-text">PRONTO</span>
+            </button>
+          </div>
+        </article>
 
-    <!-- Pantalla: Config Ruleta -->
-    <section id="pantalla-config-ruleta" class="pantalla" hidden>
-      <button id="btnVolverConfiguracion" class="boton-volver" aria-label="Volver al selector">
-        ← Volver
-      </button>
-      <div class="config-panel">
-        <h2>Configuración — La Ruleta Futbolera</h2>
-        <p class="muted">Ajustá la cantidad de jugadores, categorías y comenzá la ronda.</p>
-
-        <label class="field">
-          <span>Cantidad de jugadores</span>
-          <input type="number" id="ruleta-cantidad" min="3" max="22" value="6">
-        </label>
-
-        <label class="field">
-          <span>Categorías (separadas por coma)</span>
-          <input type="text" id="ruleta-tematicas" value="Defensa,Delantero,Arquero,Capitán">
-        </label>
-
-        <div class="config-actions">
-          <button id="btnIniciarRuleta" class="btn-primary">Iniciar Ruleta</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Pantalla: Config Fichaje -->
-    <section id="pantalla-config-fichaje" class="pantalla" hidden>
-      <button id="btnVolverConfiguracion2" class="boton-volver" aria-label="Volver al selector">
-        ← Volver
-      </button>
-      <div class="config-panel">
-        <h2>Configuración — ¿Quién Miente?</h2>
-        <p class="muted">Elegí número de jugadores y cantidad de mentiras.</p>
-
-        <label class="field">
-          <span>Número de jugadores</span>
-          <input type="number" id="fichaje-cantidad" min="3" max="20" value="6">
-        </label>
-
-        <label class="field">
-          <span>Cantidad de mentiras</span>
-          <input type="number" id="fichaje-mentiras" min="1" max="5" value="1">
-        </label>
-
-        <div class="config-actions">
-          <button id="btnIniciarFichaje" class="btn-primary">Comenzar</button>
-        </div>
       </div>
     </section>
 
   </main>
 
+  <!-- Footer moderno -->
   <footer class="site-footer">
-    <small>© TERCER TIEMPO — Hecho para la juntada ⚽</small>
+    <div class="footer-content">
+      <p class="footer-text">© 2025 TERCER TIEMPO</p>
+      <p class="footer-subtitle">Hecho con ⚽ para la juntada</p>
+    </div>
   </footer>
 
-  <!-- Scripts: socket.io (CDN) + archivos locales -->
-  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" defer></script>
-  <script src="futbolistas.js" defer></script>
-  <script src="tematicas.js" defer></script>
+  <!-- Scripts -->
   <script src="script.js" defer></script>
 </body>
 </html>
