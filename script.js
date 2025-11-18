@@ -1,4 +1,4 @@
-/* ========== TERCER TIEMPO - SCRIPT MÓVIL OPTIMIZADO ========== */
+/* ========== TERCER TIEMPO - SCRIPT MÓVIL OPTIMIZADO - CORREGIDO ========== */
 
 (() => {
   'use strict';
@@ -37,6 +37,8 @@
     preventZoom() {
       const viewport = document.querySelector('meta[name="viewport"]');
       if (viewport) {
+        // Se mantiene 'user-scalable=no' aquí para el zoom, pero se confía en la
+        // gestión moderna de eventos táctiles para los botones.
         viewport.setAttribute('content', 
           'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
         );
@@ -161,22 +163,21 @@
     }
 
     setupEventListeners() {
-      // Toggle manual con mejor feedback táctil
+      // Toggle manual con mejor feedback táctil (solo transform)
       themeToggle?.addEventListener('touchstart', (e) => {
-        e.preventDefault();
+        // CORRECCIÓN: Usar preventDefault solo para evitar el click simulado de 300ms, pero no para romper el flujo.
+        // En este caso, lo mejor es dejar que el click haga el toggle.
         themeToggle.style.transform = 'scale(0.95)';
-      }, { passive: false });
+      }, { passive: true }); // Usar passive para no bloquear el scroll
 
       themeToggle?.addEventListener('touchend', (e) => {
-        e.preventDefault();
-        setTimeout(() => this.toggle(), 50);
-      }, { passive: false });
+        // CORRECCIÓN: Eliminar e.preventDefault() aquí
+        themeToggle.style.transform = '';
+      }, { passive: true });
 
-      // Fallback para dispositivos no táctiles
+      // Evento principal de toggle (funciona en click, ratón y toque simulado)
       themeToggle?.addEventListener('click', (e) => {
-        if (!MobileUtils.isTouchDevice()) {
-          this.toggle();
-        }
+        this.toggle();
       });
 
       // Detectar cambios del sistema
@@ -213,42 +214,27 @@
     }
 
     setupButtonTouchEvents(button, gameType) {
-      let touchStartTime = 0;
-
+      // Usar touchstart/touchend solo para feedback visual y vibración
       button.addEventListener('touchstart', (e) => {
         e.stopPropagation();
-        touchStartTime = Date.now();
         button.style.transform = 'scale(0.95)';
         MobileUtils.vibrate();
       }, { passive: true });
 
       button.addEventListener('touchend', (e) => {
         e.stopPropagation();
-        e.preventDefault();
-        
-        const touchDuration = Date.now() - touchStartTime;
-        
-        // Solo activar si el toque fue rápido (no un deslizamiento)
-        if (touchDuration < 500) {
-          setTimeout(() => {
-            button.style.transform = '';
-            this.handleGameStart(gameType);
-          }, 50);
-        } else {
-          button.style.transform = '';
-        }
-      }, { passive: false });
+        // CORRECCIÓN: Eliminar e.preventDefault() aquí
+        button.style.transform = '';
+      }, { passive: true });
 
       button.addEventListener('touchcancel', () => {
         button.style.transform = '';
       });
 
-      // Fallback para dispositivos no táctiles
+      // Evento principal de juego (funciona en click, ratón y toque simulado)
       button.addEventListener('click', (e) => {
-        if (!MobileUtils.isTouchDevice()) {
-          e.stopPropagation();
-          this.handleGameStart(gameType);
-        }
+        e.stopPropagation();
+        this.handleGameStart(gameType);
       });
     }
 
@@ -296,7 +282,8 @@
             MobileUtils.vibrate();
             setTimeout(() => {
               card.style.transform = '';
-              playButton.click();
+              // CORRECCIÓN: Permitir que el playButton.click() se ejecute
+              playButton.click(); 
             }, 100);
           }
         } else {
@@ -328,15 +315,8 @@
     }
 
     setupTouchFeedback() {
-      // Prevenir comportamientos por defecto que interfieren con la UX móvil
-      document.addEventListener('touchstart', (e) => {
-        // Prevenir zoom en doble tap en elementos específicos
-        if (e.target.closest('.game-card, .play-button, .theme-toggle, .help-button')) {
-          e.preventDefault();
-        }
-      }, { passive: false });
-
-      // Prevenir selección de texto accidental
+      // CORRECCIÓN: Eliminar el uso de e.preventDefault() global en touchstart/touchend
+      // y dejar solo la prevención de la selección de texto al arrastrar sobre elementos importantes.
       document.addEventListener('selectstart', (e) => {
         if (e.target.closest('.game-card, .play-button')) {
           e.preventDefault();
@@ -443,25 +423,19 @@
     }
 
     setupEventListeners() {
-      // Eventos táctiles para el botón de ayuda
+      // Eventos táctiles para el botón de ayuda (solo feedback visual)
       helpButton?.addEventListener('touchstart', (e) => {
-        e.preventDefault();
         helpButton.style.transform = 'scale(0.9)';
-      }, { passive: false });
+      }, { passive: true });
 
       helpButton?.addEventListener('touchend', (e) => {
-        e.preventDefault();
-        setTimeout(() => {
-          helpButton.style.transform = '';
-          this.showMobileHelp();
-        }, 50);
-      }, { passive: false });
+        // CORRECCIÓN: Eliminar e.preventDefault() aquí
+        helpButton.style.transform = '';
+      }, { passive: true });
 
-      // Fallback para dispositivos no táctiles
+      // Evento principal de ayuda
       helpButton?.addEventListener('click', (e) => {
-        if (!MobileUtils.isTouchDevice()) {
-          this.showMobileHelp();
-        }
+        this.showMobileHelp();
       });
     }
 
