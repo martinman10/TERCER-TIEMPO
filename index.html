@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DT de Previa | Fútbol Previa Games</title> 
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2980b9"> <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="img/iconoquienmiente.png">
+
+</head>
+<body>
+
+  <button class="help-button" id="btnAyuda">?</button>
+  <button class="theme-button" id="btnTema" aria-label="Cambiar tema">🌙</button>
+  <button id="btnVolverConfiguracion" class="boton-volver" aria-label="Volver" style="display:none;">
+      <img src="img/volver.svg" alt="Volver">
+  </button>
+  
+  <div id="main-container">
+    
+    <div id="pantalla-selector-juegos" class="pantalla activa">
+
+      <div class="logo-container">
+        <h1 class="app-title">DT DE PREVIA</h1>
+        <p class="subtitle">Elige la Táctica para la Juntada</p>
+      </div>
+
+      <div class="menu-juegos">
+        
+        <div class="game-card" data-game="ruleta">
+          <div class="card-icon">🎡</div>
+          <h2>La Ruleta Futbolera</h2>
+          <p class="description">Arma tu 11 ideal con categorías aleatorias. ¡Caos garantizado!</p>
+          <button class="btn-jugar" id="btnJugarRuleta">JUGAR</button>
+        </div>
+
+        <div class="game-card" data-game="fichaje">
+          <div class="card-icon">🕵️</div>
+          <h2>El Falso Fichaje</h2>
+          <p class="description">Deducción social y bluffing. ¡Descubre al Agente Falso!</p>
+          <button class="btn-jugar" id="btnJugarFichaje">JUGAR</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="pantalla-config-ruleta" class="pantalla" style="display:none;">
+      <h2>Configuración Ruleta</h2>
+      </div>
+
+    <div id="pantalla-config-fichaje" class="pantalla" style="display:none;">
+      <h2>Configuración Fichaje</h2>
+      </div>
+
+  </div>
+  
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script>
+  // Conexión global, mantener tu código de conexión aquí.
+  window.socket = io("https://quien-miente-server.onrender.com", {
+    transports: ["websocket", "polling"]
+  });
+
+  window.socket.on("connect", () => {
+    console.log("✅ Conectado al servidor:", window.socket.id);
+  });
+  // ... (otros handlers de socket: connect_error, disconnect)
+</script>
+
+<script src="futbolistas.js"></script>
+<script src="tematicas.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
