@@ -1,79 +1,136 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TERCER TIEMPO | JUEGOS DE FUTBOL</title> 
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@900&family=Bebas+Neue&display=swap" rel="stylesheet">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#2980b9"> <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="apple-touch-icon" href="img/iconoquienmiente.png">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TERCER TIEMPO | Juegos de fútbol</title>
 
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- PWA / Meta -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b78b6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="img/iconoquienmiente.png">
 </head>
 <body>
 
-  <button class="help-button" id="btnAyuda">?</button>
-  <button class="theme-button" id="btnTema" aria-label="Cambiar tema">🌙</button>
-  <button id="btnVolverConfiguracion" class="boton-volver" aria-label="Volver" style="display:none;">
-      <img src="img/volver.svg" alt="Volver">
-  </button>
-  
-  <div id="main-container">
-    
-    <div id="pantalla-selector-juegos" class="pantalla activa">
-
-      <div class="logo-container">
-        <h1 class="app-title">TERCER TIEMPO</h1>
-        <p class="subtitle">Elige la Táctica para la Juntada</p>
-      </div>
-
-      <div class="menu-juegos">
-        
-        <div class="game-card" data-game="ruleta">
-          <div class="card-icon">🎡</div>
-          <h2>La Ruleta Futbolera</h2>
-          <p class="description">Arma tu 11 ideal con categorías aleatorias. ¡Caos garantizado!</p>
-          <button class="btn-jugar" id="btnJugarRuleta">JUGAR</button>
-        </div>
-
-        <div class="game-card" data-game="fichaje">
-          <div class="card-icon">🕵️</div>
-          <h2>¿Quién Miente?</h2>
-          <p class="description">Descubre al impostor</p>
-          <button class="btn-jugar" id="btnJugarFichaje">JUGAR</button>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="img/iconoquienmiente.png" alt="Icono Tercer Tiempo" class="brand-icon" />
+        <div>
+          <h1 class="app-title">TERCER TIEMPO</h1>
+          <p class="subtitle">Juegos de fútbol para la juntada</p>
         </div>
       </div>
 
+      <div class="header-actions">
+        <button id="btnTema" class="action-btn" aria-pressed="false" title="Cambiar tema">🌙</button>
+        <button id="btnAyuda" class="help-button" aria-label="Ayuda">?</button>
+      </div>
     </div>
+  </header>
 
-    <div id="pantalla-config-ruleta" class="pantalla" style="display:none;">
-      <h2>Configuración Ruleta</h2>
+  <main id="main-container" class="container">
+
+    <!-- Pantalla: selector de juegos -->
+    <section id="pantalla-selector-juegos" class="pantalla activa" aria-live="polite">
+      <h2 class="sr-only">Selector de juegos</h2>
+
+      <div class="cards-grid">
+
+        <article class="game-card" data-game="ruleta" role="button" tabindex="0" aria-label="La Ruleta Futbolera">
+          <div class="card-top">
+            <div class="card-icon">🎡</div>
+            <h3>La Ruleta Futbolera</h3>
+          </div>
+          <p class="description">Arma tu 11 ideal con categorías aleatorias. ¡Caos garantizado!</p>
+          <div class="card-actions">
+            <button class="btn-jugar" id="btnJugarRuleta">JUGAR</button>
+          </div>
+        </article>
+
+        <article class="game-card" data-game="fichaje" role="button" tabindex="0" aria-label="¿Quién Miente?">
+          <div class="card-top">
+            <div class="card-icon">🕵️</div>
+            <h3>¿Quién Miente?</h3>
+          </div>
+          <p class="description">Descubre al impostor entre las historias.</p>
+          <div class="card-actions">
+            <button class="btn-jugar" id="btnJugarFichaje">JUGAR</button>
+          </div>
+        </article>
+
+        <!-- Agregá más cards aquí si querés -->
       </div>
+    </section>
 
-    <div id="pantalla-config-fichaje" class="pantalla" style="display:none;">
-      <h2>Configuración ¿Quién Miente?</h2>
+    <!-- Pantalla: Config Ruleta -->
+    <section id="pantalla-config-ruleta" class="pantalla" hidden>
+      <button id="btnVolverConfiguracion" class="boton-volver" aria-label="Volver al selector">
+        ← Volver
+      </button>
+      <div class="config-panel">
+        <h2>Configuración — La Ruleta Futbolera</h2>
+        <p class="muted">Ajustá la cantidad de jugadores, categorías y comenzá la ronda.</p>
+
+        <label class="field">
+          <span>Cantidad de jugadores</span>
+          <input type="number" id="ruleta-cantidad" min="3" max="22" value="6">
+        </label>
+
+        <label class="field">
+          <span>Categorías (separadas por coma)</span>
+          <input type="text" id="ruleta-tematicas" value="Defensa,Delantero,Arquero,Capitán">
+        </label>
+
+        <div class="config-actions">
+          <button id="btnIniciarRuleta" class="btn-primary">Iniciar Ruleta</button>
+        </div>
       </div>
+    </section>
 
-  </div>
-  
-  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-<script>
-  // Conexión global, mantener tu código de conexión aquí.
-  window.socket = io("https://quien-miente-server.onrender.com", {
-    transports: ["websocket", "polling"]
-  });
+    <!-- Pantalla: Config Fichaje -->
+    <section id="pantalla-config-fichaje" class="pantalla" hidden>
+      <button id="btnVolverConfiguracion2" class="boton-volver" aria-label="Volver al selector">
+        ← Volver
+      </button>
+      <div class="config-panel">
+        <h2>Configuración — ¿Quién Miente?</h2>
+        <p class="muted">Elegí número de jugadores y cantidad de mentiras.</p>
 
-  window.socket.on("connect", () => {
-    console.log("✅ Conectado al servidor:", window.socket.id);
-  });
-  // ... (otros handlers de socket: connect_error, disconnect)
-</script>
+        <label class="field">
+          <span>Número de jugadores</span>
+          <input type="number" id="fichaje-cantidad" min="3" max="20" value="6">
+        </label>
 
-<script src="futbolistas.js"></script>
-<script src="tematicas.js"></script>
-<script src="script.js"></script>
+        <label class="field">
+          <span>Cantidad de mentiras</span>
+          <input type="number" id="fichaje-mentiras" min="1" max="5" value="1">
+        </label>
 
+        <div class="config-actions">
+          <button id="btnIniciarFichaje" class="btn-primary">Comenzar</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <small>© TERCER TIEMPO — Hecho para la juntada ⚽</small>
+  </footer>
+
+  <!-- Scripts: socket.io (CDN) + archivos locales -->
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" defer></script>
+  <script src="futbolistas.js" defer></script>
+  <script src="tematicas.js" defer></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
