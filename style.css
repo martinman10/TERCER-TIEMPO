@@ -1,160 +1,88 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
-/* Si utilizas el font 'Biennale Black', también debes importarlo */
-
 /* ========== VARIABLES Y RESETS ========== */
 :root{
-  --bg: #f5f6fa; /* Fondo gris claro */
-  --surface: #ffffff; /* Superficie blanca */
-  --muted: #666; /* Texto gris más oscuro */
-  --text: #222; /* Texto principal oscuro */
-  --accent: #ff4757; /* Color principal (rojo) */
-  --card-radius: 12px; /* Radio de borde ajustado */
-  --glass: rgba(255,255,255,0.8); /* Efecto cristalino */
-  --shadow-base: rgba(0, 0, 0, 0.1); /* Sombra estándar */
-  --shadow-accent: rgba(255, 71, 87, 0.5); /* Sombra de acento (roja) */
-  --hover-accent: #e84118; /* Rojo de hover */
+  --bg: #f6fbff;
+  --surface: #ffffff;
+  --muted: #6b7280;
+  --text: #0b1220;
+  --accent: #0b78b6;
+  --card-radius: 14px;
+  --glass: rgba(255,255,255,0.6);
 }
 
 *{box-sizing:border-box}
-html,body{
-    height:100%;
-    margin:0;
-    font-family:Rubik,system-ui,Arial,sans-serif;
-    color:var(--text);
-    background:var(--bg); /* Fondo sólido */
-    -webkit-font-smoothing:antialiased;
-    overflow-x: hidden; /* Evita el scroll horizontal */
-}
+html,body{height:100%;margin:0;font-family:Rubik,system-ui,Arial,sans-serif;color:var(--text);background:linear-gradient(180deg,#e9f6ff 0%, var(--bg) 100%);-webkit-font-smoothing:antialiased}
 img{max-width:100%;display:block}
-
-/* Estilo general para elementos de tarjeta/panel */
-.card-style {
-  background: var(--surface);
-  border-radius: var(--card-radius);
-  box-shadow: 0 10px 30px var(--shadow-base); /* Sombra más prominente */
-}
-
 
 /* ========== HEADER ========== */
 .site-header{
-  position:sticky;top:0;
-  background:var(--glass); /* Fondo blanco con blur */
-  padding:14px 18px;
-  backdrop-filter: blur(8px);
-  z-index:30;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Sombra sutil para el header */
+  position:sticky;top:0;background:transparent;padding:14px 18px;backdrop-filter: blur(6px);z-index:30;
 }
 .header-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto}
 .brand{display:flex;gap:12px;align-items:center}
-.brand-icon{
-  width:56px;height:56px;border-radius:10px;object-fit:cover;
-  box-shadow:0 6px 18px var(--shadow-base); /* Nueva sombra */
-}
+.brand-icon{width:56px;height:56px;border-radius:10px;object-fit:cover;box-shadow:0 6px 18px rgba(11,120,182,0.12)}
 .app-title{font-family:'Bebas Neue',sans-serif;font-size:28px;margin:0;color:var(--accent);letter-spacing:1px}
 .subtitle{margin:0;font-size:12px;color:var(--muted)}
 
-
-/* ========== ACTION BUTTONS (en el header) ========== */
+/* ========== ACTION BUTTONS ========== */
 .header-actions{display:flex;gap:8px;align-items:center}
-/* Botones de acción estándar */
-.action-btn, .header-actions .help-button{
-    background:var(--surface);
-    border:1px solid #ddd;
-    padding:8px 10px;
-    border-radius:8px; /* Borde más pequeño */
-    cursor:pointer;
-    box-shadow:0 4px 12px rgba(0,0,0,0.05);
-    font-size:16px;
-    transition: all 0.25s ease;
-}
-.action-btn:hover, .header-actions .help-button:hover {
-    border-color: var(--accent);
-    background-color: #80808033;
-}
-/* Estilo del botón de ayuda en el header (no circular/fijo) */
-.header-actions .help-button{
-    width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;
-    position: static;
-    font-size: 16px;
-}
-
-/* ========== BOTÓN PRINCIPAL (rojo) - Usar en lugar de .btn-jugar o .btn-primary */
-.btn-primary {
-  background: var(--accent);
-  border: none;
-  color: white;
-  font-weight: 700;
-  padding: 12px 20px;
-  border-radius: 8px;
-  box-shadow: 0 6px 12px var(--shadow-accent);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-  background-color: var(--hover-accent);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(232, 65, 24, 0.7);
-}
-
-/* ========== BOTÓN DE AYUDA (circular y fijo) - Estilo del segundo archivo */
-.help-button{
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 40px;
-  height: 40px;
-  font-size: 1.8rem;
-  border-radius: 50%;
-  border: none;
-  background: var(--accent);
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  user-select: none;
-  transition: background-color 0.3s;
-  z-index: 1000;
-  box-shadow: 0 5px 15px var(--shadow-accent);
-}
-
-.help-button:hover {
-  background: var(--hover-accent);
-}
-
+.action-btn, .help-button{background:var(--surface);border:none;padding:8px 10px;border-radius:10px;cursor:pointer;box-shadow:0 6px 18px rgba(11,120,182,0.08);font-size:16px}
+.help-button{width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
 
 /* ========== CONTAINER ========== */
 .container{max-width:1100px;margin:26px auto;padding:0 18px}
 
-
-/* ========== CONFIG PANELS (Aplicando el nuevo estilo de sombra/fondo) ========== */
-.config-panel{
-  max-width:720px;
-  margin:8px auto;
-  background:var(--surface); /* Fondo blanco sólido */
-  padding:18px;
-  border-radius:var(--card-radius);
-  box-shadow:0 10px 30px var(--shadow-base); /* Nueva sombra */
-}
-
-/* Asegurar que las tarjetas de la grilla usen el nuevo estilo */
-.game-card{
-    background: var(--surface);
-    border-radius: var(--card-radius);
-    box-shadow: 0 10px 30px var(--shadow-base);
-    padding: 18px;
-    transition: transform 0.2s;
-}
-
-.game-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 35px var(--shadow-base);
-}
-
-/* GRID OF CARDS - mantener la estructura de grilla */
+/* ========== GRID OF CARDS ========== */
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;align-items:start}
-/* .game-card... (continúa con tus estilos específicos para .game-card) */
+.game-card{
+  background:linear-gradient(180deg, rgba(255,255,255,0.9), var(--surface));
+  border-radius:var(--card-radius);
+  padding:18px;
+  box-shadow:0 12px 30px rgba(11,120,182,0.08);
+  transition:transform .22s ease,box-shadow .22s ease;
+  display:flex;flex-direction:column;gap:12px;outline:none;border-top:6px solid var(--accent);
+}
+.game-card:focus, .game-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(11,120,182,0.12)}
+.card-top{display:flex;align-items:center;gap:12px}
+.card-icon{font-size:36px}
+.game-card h3{margin:0;font-size:20px;color:var(--text)}
+.description{margin:0;color:var(--muted);font-size:14px}
 
-/* ... El resto de tus estilos de .game-card, .btn-jugar, etc. deberían usar las nuevas variables de color. */
+/* ========== BOTONES ========== */
+.btn-jugar, .btn-primary{
+  background:var(--accent);color:#fff;border:none;padding:10px 12px;border-radius:10px;font-weight:700;cursor:pointer;
+  box-shadow:0 10px 24px rgba(11,120,182,0.14)
+}
+.btn-jugar:hover, .btn-primary:hover{filter:brightness(.95);transform:translateY(-2px)}
+
+/* ========== CONFIG PANELS ========== */
+.pantalla{padding:18px}
+.config-panel{max-width:720px;margin:8px auto;background:linear-gradient(180deg, rgba(11,120,182,0.03), rgba(255,255,255,0.6));padding:18px;border-radius:12px;box-shadow:0 8px 24px rgba(2,6,23,0.04)}
+.field{display:flex;flex-direction:column;gap:8px;margin:12px 0}
+.field input[type="number"], .field input[type="text"]{padding:10px;border-radius:8px;border:1px solid rgba(10,10,12,0.06);font-size:15px}
+
+/* Volver */
+.boton-volver{background:none;border:none;color:var(--accent);font-weight:700;padding:8px 6px;cursor:pointer;margin-bottom:8px}
+
+/* ========== FOOTER ========== */
+.site-footer{text-align:center;padding:18px 8px;color:var(--muted);font-size:13px}
+
+/* ========== UTILITIES ========== */
+.muted{color:var(--muted)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ========== TEMA OSCURO ========== */
+body.tema-oscuro{
+  --bg: #081018;
+  --surface: #0f1720;
+  --muted: #9aa4b2;
+  --text: #e6eef6;
+  --accent: #2ea6ff;
+  background: linear-gradient(180deg,#06121a 0%, #071827 100%);
+}
+
+/* Responsive tweaks */
+@media (max-width:520px){
+  .app-title{font-size:22px}
+  .brand-icon{width:48px;height:48px}
+  .cards-grid{gap:14px}
+}
