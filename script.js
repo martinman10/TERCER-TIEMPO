@@ -13,9 +13,9 @@
   const themeToggle = document.getElementById('btnTema');
   const helpButton = document.getElementById('btnAyuda');
   const playButtons = {
-    ruleta: document.getElementById('btnJugarRuleta'),
-    fichaje: document.getElementById('btnJugarFichaje')
-  };
+  ruleta: document.getElementById('btnJugarRuleta')
+  // btnJugarFichaje no va acá porque ya es un enlace real
+};
   const gameCards = document.querySelectorAll('.game-card:not(.coming-soon)');
   const body = document.body;
 
