@@ -1,0 +1,1517 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
+@font-face {
+  font-family: 'Biennale Black';
+  src: url('Biennale Black.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Rubik', sans-serif;
+  background: #f5f6fa;
+  color: #222;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Scroll personalizado para escritorio */
+@media (min-width: 768px) {
+  body::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  body::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  body::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.1);
+    border-radius: 4px;
+  }
+  
+  body::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,0,0,0.2);
+  }
+  
+  /* Para Firefox */
+  body {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0,0,0,0.1) transparent;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 480px;
+  height: calc(var(--vh, 1vh) * 100);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+  padding: 30px 25px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+label {
+  display: block;
+  margin: 15px 0 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-align: left;
+  color: #222;
+  user-select: none;
+}
+
+select, button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: all 0.25s ease;
+  user-select: none;
+  border: 1.8px solid #ddd;
+}
+
+select:hover, select:focus {
+  border-color: red;
+  outline: none;
+  background-color: #80808033;
+  cursor: pointer;
+}
+
+button {
+  border: none;
+  background-color: #ff4757;
+  color: white;
+  margin-top: 22px;
+  font-weight: 700;
+  box-shadow: 0 6px 12px rgba(255, 71, 87, 0.5);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #e84118;
+  box-shadow: 0 8px 20px rgba(232, 65, 24, 0.7);
+}
+
+.card {
+  background: #fff7f7;
+  border-radius: 14px;
+  padding: 35px 25px;
+  margin-bottom: 100px;
+  box-shadow: 0 12px 30px rgba(255, 71, 87, 0.15);
+  min-height: 180px;
+  opacity: 0;
+  animation: fadeInScale 0.5s forwards;
+  user-select: none;
+  position: relative;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.famoso, .impostor {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin: 22px 0 12px;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.famoso {
+  color: #27ae60;
+}
+
+.impostor {
+  color: #e74c3c;
+}
+
+.bottom-button {
+  margin-top: 20px;
+  user-select: none;
+}
+
+.pasar-telefono {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: #444;
+}
+
+.timer {
+  font-weight: 700;
+  font-size: 2.2rem;
+  color: #ff4757;
+  margin-bottom: 18px;
+  user-select: none;
+}
+
+.help-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  font-size: 1.8rem;
+  border-radius: 50%;
+  border: none;
+  background: #ff4757;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  transition: background-color 0.3s;
+  z-index: 1000;
+  box-shadow: 0 5px 15px rgba(255, 71, 87, 0.5);
+}
+
+.help-button:hover {
+  background: #e84118;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+  width: 90%;
+  color: #222;
+  font-size: 1.1rem;
+  text-align: left;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.timer-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 25px;
+}
+
+svg {
+  transform: rotate(-90deg);
+  width: 200px;
+  height: 200px;
+}
+
+.circle-bg {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 15;
+}
+
+.circle-progress {
+  fill: none;
+  stroke: #ff4757;
+  stroke-width: 15;
+  stroke-linecap: round;
+  transition: stroke 0.5s ease;
+}
+
+.imagen-famoso {
+  width: 100%;
+  height: auto;
+  max-height: 250px;
+  object-fit: contain;
+  margin-bottom: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.timer-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3.8rem;
+  font-weight: 700;
+  color: #ff4757;
+  user-select: none;
+  font-family: 'Rubik', sans-serif;
+}
+
+.timer-text.warning {
+  color: #e84118;
+}
+
+#terminarRondaBtn {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  background-color: #ff4757;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(255, 71, 87, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+#terminarRondaBtn:hover {
+  background-color: #e84118;
+  box-shadow: 0 8px 20px rgba(232, 65, 24, 0.7);
+}
+
+select, option {
+  color: #ff4757;
+}
+
+body {
+  overflow-y: auto;
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.logo-icono {
+  width: 80px;
+  height: auto;
+  display: block;
+  margin: 0 auto 10px;
+}
+
+#pantalla-inicial button {
+  display: block;
+  width: 100%;
+  margin: 12px auto;
+  padding: 12px;
+  font-size: 1.1rem;
+}
+
+#pantalla-editar-nombres {
+  margin-top: 20px;
+}
+
+#inputs-nombres input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1.5px solid #ccc;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.modal-content {
+  padding: 30px;
+  overflow-y: auto;
+  flex: 1 1 auto;
+}
+
+.modal-footer {
+  padding: 15px 30px;
+  border-top: 1px solid #ddd;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-end;
+  background: #fff;
+}
+
+.modal-footer button {
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  background-color: #ff4757;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(255, 71, 87, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+.modal-footer button:hover {
+  background-color: #e84118;
+  box-shadow: 0 8px 20px rgba(232, 65, 24, 0.7);
+}
+
+/* ====== NUEVOS ESTILOS PARA SELECCIÓN DE TEMÁTICAS ====== */
+
+.subtitle {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.tematicas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  padding: 10px 0;
+  max-height: 50vh;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.tematica-card {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 2px solid #dee2e6;
+  border-radius: 12px;
+  padding: 16px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tematica-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s;
+}
+
+.tematica-card:hover::before {
+  left: 100%;
+}
+
+.tematica-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-color: #ff4757;
+}
+
+.tematica-card.selected {
+  background: linear-gradient(135deg, #ff4757 0%, #e84118 100%);
+  border-color: #e84118;
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(255, 71, 87, 0.4);
+}
+
+.tematica-card.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #e84118;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.tematica-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.tematica-count {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  font-weight: 400;
+}
+
+.selected-counter {
+  text-align: center;
+  margin: 15px 0;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #495057;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #ff4757 0%, #e84118 100%) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 700 !important;
+  padding: 14px 20px !important;
+  border-radius: 10px !important;
+  box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4) !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(255, 71, 87, 0.6) !important;
+}
+
+.btn-primary:disabled {
+  background: #6c757d !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn-secondary {
+  background: #6c757d !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 600 !important;
+  padding: 14px 20px !important;
+  border-radius: 10px !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-secondary:hover {
+  background: #5a6268 !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Animación de entrada para las tarjetas */
+@keyframes cardSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tematica-card {
+  animation: cardSlideIn 0.4s ease forwards;
+}
+
+.tematica-card:nth-child(1) { animation-delay: 0.1s; }
+.tematica-card:nth-child(2) { animation-delay: 0.15s; }
+.tematica-card:nth-child(3) { animation-delay: 0.2s; }
+.tematica-card:nth-child(4) { animation-delay: 0.25s; }
+.tematica-card:nth-child(5) { animation-delay: 0.3s; }
+.tematica-card:nth-child(6) { animation-delay: 0.35s; }
+
+/* ====== FIN NUEVOS ESTILOS ====== */
+
+/* 🎯 Celulares (hasta 767px) */
+@media (max-width: 767px) {
+   .container {
+    height: auto;
+    padding: 0px 18px 0px;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+ .logo-icono {
+  width: 200px;
+  margin-top: 40px;
+  margin-bottom: 0px;
+  }
+
+  select, button {
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .modal {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    border-radius: 0;
+    padding: 20px;
+  }
+
+  .modal-content {
+    padding: 20px;
+    font-size: 1rem;
+  }
+
+  .modal-footer {
+    padding: 10px 20px;
+  }
+
+  .help-button {
+    top: 15px;
+    right: 15px;
+    width: 35px;
+    height: 35px;
+    font-size: 1.4rem;
+  }
+
+  /* Ajustes para tarjetas de temáticas en móvil */
+  .tematicas-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+  }
+
+  .tematica-card {
+    min-height: 70px;
+    padding: 12px 8px;
+  }
+
+  .tematica-name {
+    font-size: 0.8rem;
+  }
+
+  .tematica-count {
+    font-size: 0.7rem;
+  }
+}
+
+/* 🖥️ Escritorio (desde 768px en adelante) */
+@media (min-width: 768px) {
+  .container {
+    max-width: 600px;
+    height: auto;
+    min-height: 80vh;
+    padding: 30px 25px;
+    border-radius: 15px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+  }
+
+  .modal {
+    max-width: 600px;
+    border-radius: 12px;
+  }
+
+  .help-button {
+    width: 40px;
+    height: 40px;
+    font-size: 1.8rem;
+  }
+  
+  .logo-icono {
+    width: 100px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+  }
+
+  /* Mejor distribución en escritorio */
+  .tematicas-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 15px;
+  }
+}
+
+#pantalla-editar-nombres button {
+  margin-top: 5px;
+}
+
+.fixed-buttons {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  padding: 10px 20px;
+  text-align: center;
+  z-index: 999;
+}
+
+.fixed-buttons button {
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* 📱 En celular (pantallas hasta 767px): más abajo */
+@media (max-width: 767px) {
+  .fixed-buttons {
+    bottom: 100px;
+  }
+}
+
+/* 🖥️ En escritorio (desde 768px): más arriba */
+@media (min-width: 768px) {
+  .fixed-buttons {
+    bottom: 120px;
+  }
+}
+
+.loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #ff4757;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.nombre-turno {
+  color: #007bff;
+  font-weight: 700;
+  margin-left: 6px;
+}
+
+.nombre-jugador {
+  color: #007bff;
+  font-weight: 700;
+}
+
+.carta-turno {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  padding: 40px 20px 30px;
+  max-width: 400px;
+  width: 100%;
+  min-height: 240px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+#main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 📱 Ajustes especiales para celulares */
+@media (max-width: 767px) {
+  .carta-turno {
+    max-width: 95%;
+    min-height: 300px;
+    margin-top: 40px;
+    margin-bottom: 100px;
+    padding: 125px 25px 40px;
+    font-size: 1.2rem;
+  }
+
+  .carta-turno h2 {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  .nombre-jugador {
+    font-size: 1.6rem;
+  }
+}
+
+.carta-pasar {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  padding: 40px 20px 30px;
+  max-width: 400px;
+  width: 100%;
+  min-height: 220px;
+  margin: 20px auto 80px;
+  text-align: center;
+}
+
+/* 📱 Ajustes para la carta "Pasá el teléfono" en celulares */
+@media (max-width: 767px) {
+  .carta-pasar {
+    max-width: 95%;
+    min-height: 300px;
+    margin-top: 40px;
+    margin-bottom: 100px;
+    padding: 115px 25px 40px;
+    font-size: 1.2rem;
+  }
+
+  .carta-pasar h2 {
+    font-size: 1.6rem;
+  }
+
+  .carta-pasar .nombre-jugador {
+    font-size: 1.2rem;
+  }
+}
+
+#pantalla-editar-tematica { 
+  margin-top: 20px; 
+}
+
+#lista-famosos-tematica label {
+  display: block;
+  margin: 8px 0;
+  padding: 4px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+
+#lista-famosos-tematica .famoso-item input { 
+  margin-right: 10px; 
+}
+
+.boton-volver {
+  position: fixed;
+  top: 18px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border: none;
+  border-radius: 50%;
+  font-size: 33px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  display: none;
+  padding: 0;
+}
+
+.modal-content .famoso,
+.modal-content .impostor {
+  font-size: 1em;
+  font-weight: 700;
+  display: inline;
+}
+
+#inputs-nombres-container {
+  max-height: 240px;
+  overflow-y: auto;
+  margin-bottom: 100px;
+  padding-right: 5px;
+}
+
+#pantalla-editar-nombres .fixed-buttons {
+  position: sticky;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  background: white;
+  padding: 10px 20px;
+  text-align: center;
+  z-index: 999;
+}
+
+#pantalla-editar-nombres .fixed-buttons button {
+  width: 100%;
+  margin: 5px 0;
+}
+
+#pantalla-editar-nombres .fixed-buttons {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  background: white;
+  padding: 10px 20px;
+  text-align: center;
+  z-index: 999;
+}
+
+#pantalla-editar-nombres .fixed-buttons button {
+  width: 100%;
+  margin: 5px 0;
+}
+
+#pantalla-editar-nombres {
+  margin-top: 0 !important;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#inputs-nombres-container {
+  max-height: 240px;
+  overflow-y: auto;
+  margin-bottom: 80px;
+  padding-right: 5px;
+  width: 100%;
+}
+
+#pantalla-editar-nombres {
+  margin-top: 10px !important;
+}
+
+#pantalla-editar-nombres.container {
+  justify-content: flex-start !important;
+}
+
+#main {
+  display: flex;
+}
+
+#pantalla-editar-nombres {
+  align-self: flex-start;
+  width: 100%;
+}
+
+.container#main {
+  justify-content: flex-start !important;
+}
+
+#pantalla-editar-nombres .fixed-buttons {
+  bottom: 20px !important;
+}
+
+@media (max-width: 767px) {
+  #pantalla-editar-nombres .fixed-buttons {
+    bottom: 100px !important;
+  }
+  #inputs-nombres-container {
+    margin-bottom: 240px !important;
+  }
+}
+
+.container#pantalla-seleccionar-tematicas #lista-tematicas {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+@media (min-width: 768px) {
+  .container#pantalla-seleccionar-tematicas {
+    display: flex;
+    flex-direction: column;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 100% !important;
+    min-height: 80vh;
+    padding: 30px 20px;
+    box-sizing: border-box;
+  }
+
+  .container#pantalla-seleccionar-tematicas #lista-tematicas {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+  }
+}
+
+#pantalla-seleccionar-tematicas {
+  height: calc(var(--vh, 1vh) * 100);
+  overflow-y: auto;
+  padding-bottom: 150px;
+}
+
+#lista-tematicas {
+  margin-top: 20px;
+}
+
+#pantalla-seleccionar-tematicas .fixed-buttons button {
+  margin-bottom: 12px;
+}
+
+#pantalla-seleccionar-tematicas .fixed-buttons button:last-child {
+  margin-bottom: 0;
+}
+
+#pantalla-seleccionar-tematicas {
+  min-height: calc(var(--vh, 1vh) * 100);
+  overflow-y: auto;
+  padding-bottom: 140px;
+}
+
+.fixed-buttons {
+  z-index: 10000 !important;
+  pointer-events: auto;
+  display: block !important;
+  position: fixed;
+}
+
+#pantalla-juego {
+  position: relative;
+  z-index: 1;
+}
+
+.modal-overlay {
+  z-index: 9000;
+}
+
+.fixed-buttons {
+  z-index: 10000 !important;
+}
+
+#tematicasSeleccionadasTexto {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#botonElegirTematicas {
+  flex: 0 0 150px;
+}
+
+#filaTematicas {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#tematicasSeleccionadasTexto {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#botonElegirTematicas {
+  flex-shrink: 0;
+}
+
+#filaTematicas {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+:root { 
+  --card-max: 600px; 
+}
+
+.container#main {
+  width: 100% !important;
+  max-width: var(--card-max) !important;
+  margin: 0 auto !important;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch !important;
+}
+
+#pantalla-inicial,
+#pantalla-editar-nombres,
+#pantalla-editar-tematica,
+#pantalla-seleccionar-tematicas,
+#pantalla-juego {
+  width: 100% !important;
+}
+
+#filaTematicas {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+#btnSeleccionarTematicas {
+  flex: 0 0 170px;
+}
+
+#tematicasSeleccionadasTexto {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#btnEditarTematica {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#btnEditarTematica img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.logo-icono { 
+  width: 100px !important; 
+  height: auto !important; 
+}
+
+.fixed-buttons {
+  position: fixed !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 100% !important;
+  max-width: var(--card-max) !important;
+  z-index: 10000 !important;
+  padding: 10px 20px;
+}
+
+@media (max-width: 767px) { 
+  .fixed-buttons { 
+    bottom: 100px !important; 
+  } 
+}
+
+@media (min-width: 768px) { 
+  .fixed-buttons { 
+    bottom: 120px !important; 
+  } 
+}
+
+#filaTematicas{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  width:100%;
+}
+
+#filaTematicas button{
+  width:auto;
+  margin-top:0;
+  box-shadow:none;
+}
+
+#btnSeleccionarTematicas{
+  flex:0 0 170px;
+}
+
+#tematicasSeleccionadasTexto{
+  flex:1 1 auto;
+  min-width:0;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+#btnEditarTematica{
+  flex:0 0 auto;
+  width:40px;
+  height:40px;
+  padding:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1.8px solid #ddd;
+  border-radius:8px;
+  background:#eee;
+  color:#333;
+}
+
+#btnEditarTematica:hover{ 
+  background:#e6e6e6; 
+}
+
+#filaTematicas {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+#btnSeleccionarTematicas {
+  flex: 0 0 170px;
+  height: 48px;
+  padding: 0;
+  border-radius: 8px;
+  background-color: #ff4757;
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 6px 12px rgba(255, 71, 87, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#btnEditarTematica {
+  flex: 0 0 170px;
+  height: 48px;
+  padding: 0;
+  border-radius: 8px;
+  background-color: #ddd;
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#btnEditarTematica img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+#btnSeleccionarTematicas:hover {
+  background-color: #e84118;
+}
+
+#btnEditarTematica:hover {
+  background-color: #ddd;
+}
+
+#filaTematicas {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+}
+
+#btnSeleccionarTematicas {
+  flex: 0 0 170px;
+  height: 48px;
+  padding: 0;
+  border-radius: 8px 0 0 8px;
+  background-color: #ff4757;
+  color: white;
+  font-weight: 700;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#btnEditarTematica {
+  flex: 0 0 170px;
+  height: 48px;
+  padding: 0;
+  border-radius: 0 8px 8px 0;
+  background-color: #ddd;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#btnEditarTematica img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+#btnSeleccionarTematicas:hover {
+  background-color: #e84118;
+}
+
+#btnEditarTematica:hover {
+  background-color: #ccc;
+}
+
+#filaTematicas {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+}
+
+#filaTematicas button {
+  margin: 0;
+  border: none;
+}
+
+#btnSeleccionarTematicas {
+  flex: 0 0 170px;
+  height: 48px;
+  padding: 0;
+  border-radius: 8px 0 0 8px;
+  background-color: #ff4757;
+  color: white;
+  font-weight: 700;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#btnEditarTematica {
+  flex: 0 0 170px;
+  height: 48px;
+  padding: 0;
+  border-radius: 0 8px 8px 0;
+  background-color: #ddd;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#btnEditarTematica img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+#btnSeleccionarTematicas:hover {
+  background-color: #e84118;
+}
+
+#btnEditarTematica:hover {
+  background-color: #ccc;
+}
+
+#filaTematicas {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+}
+
+#filaTematicas button {
+  margin: 0;
+  border: none;
+  height: 48px;
+  padding: 0;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#btnSeleccionarTematicas {
+  flex: 1;
+  border-radius: 8px 0 0 8px;
+  background-color: #ff4757;
+  color: white;
+  box-shadow: none;
+}
+
+#btnSeleccionarTematicas:hover {
+  background-color: #e84118;
+}
+
+#btnEditarTematica {
+  flex: 1;
+  border-radius: 0 8px 8px 0;
+  background-color: #ddd;
+  box-shadow: none;
+}
+
+#btnEditarTematica:hover {
+  background-color: #ccc;
+}
+
+#btnEditarTematica img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.container,
+.card,
+.carta-turno,
+.carta-pasar,
+.modal,
+.modal-footer,
+#pantalla-editar-nombres .fixed-buttons {
+  background: transparent !important;
+}
+
+@media (max-width: 768px) {
+  .game-fixed {
+    bottom: 80px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  button.game-fixed {
+    bottom: 80px !important;
+  }
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+:root {
+  --bg: #ffffff;
+  --text: #111111;
+  --surface: #ffffff;
+  --accent: #ff4757;
+  --btn-text: #ffffff;
+  --input-bg: #ffffff;
+  --input-border: #dddddd;
+  --overlay: rgba(0,0,0,0.6);
+}
+
+body.tema-oscuro {
+  --bg: #0f1115;
+  --text: #eaeaea;
+  --surface: #151a22;
+  --accent: #ff4757;
+  --btn-text: #ffffff;
+  --input-bg: #0f1115;
+  --input-border: #2a2f3a;
+  --overlay: rgba(0,0,0,0.7);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container,
+#pantalla-inicial,
+#pantalla-editar-nombres,
+#pantalla-editar-tematica,
+#pantalla-seleccionar-tematicas,
+#pantalla-juego {
+  color: var(--text);
+}
+
+select, input, textarea {
+  color: var(--text);
+}
+
+select, input, textarea {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+}
+
+.modal-overlay {
+  background: var(--overlay);
+}
+
+.modal-content {
+  background: #ffffff;
+  color: #111111;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.theme-button {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  transition: transform .12s ease, opacity .12s ease, background .2s ease;
+}
+
+.theme-button:active { 
+  transform: scale(0.96); 
+}
+
+.theme-button:hover { 
+  opacity: 0.92; 
+}
+
+/* CORRECCIÓN PARA MODO OSCURO - AHORA CON ROJO */
+body.tema-oscuro {
+  background: #0f1115 !important;
+  color: #eaeaea !important;
+}
+
+/* Asegurar que las tarjetas de temáticas tengan buen contraste en modo oscuro */
+body.tema-oscuro .tematica-card {
+  background: linear-gradient(135deg, #2a2f3a 0%, #1e2329 100%);
+  border-color: #3a4047;
+  color: #eaeaea;
+}
+
+body.tema-oscuro .tematica-card:hover {
+  border-color: #ff4757;
+}
+
+body.tema-oscuro .tematica-card.selected {
+  background: linear-gradient(135deg, #ff4757 0%, #e84118 100%);
+  border-color: #e84118;
+  color: white;
+}
+
+/* Subtítulo en modo oscuro */
+body.tema-oscuro .subtitle {
+  color: #8b949e;
+}
+
+/* Contador de seleccionadas en modo oscuro */
+body.tema-oscuro .selected-counter {
+  background: #2a2f3a;
+  color: #eaeaea;
+}
+
+/* Labels en modo oscuro */
+body.tema-oscuro label {
+  color: #eaeaea;
+}
+
+.logo-icono {
+  content: url("img/letras-quienmiente-claro.png");
+}
+
+body.tema-oscuro .logo-icono {
+  content: url("img/letras-quienmiente-oscuro.png");
+}
