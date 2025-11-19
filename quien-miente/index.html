@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quién Miente?</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ff4757">
+
+<!-- Para iPhone -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="img/iconoquienmiente.png">
+<body>
+  <button class="help-button" id="btnAyuda">?</button>
+  <!-- Botón tema (solo visible en pantalla de configuración) -->
+<button class="theme-button" id="btnTema" aria-label="Cambiar tema">🌙</button>
+<!-- Botón volver -->
+<button id="btnVolverConfiguracion" class="boton-volver" aria-label="Volver">
+    <img src="img/volver.svg" alt="Volver">
+</button>
+
+  <div class="logo-container">
+    <img src="img/letras-quienmiente.png" alt="Logo" class="logo-icono">
+  </div>
+
+  <div class="container" id="main">
+    <div id="pantalla-inicial">
+
+      <label for="jugadores">Número de jugadores:</label>
+<select id="jugadores"></select>
+
+<label for="impostores">Número de impostores:</label>
+<select id="impostores"></select>
+
+<label for="duracion">Duración de la ronda (minutos):</label>
+<select id="duracion"></select>
+
+      <label for="tematica">Temática:</label>
+<div id="filaTematicas">
+  <button id="btnSeleccionarTematicas">Elegir temáticas</button>
+  <button id="btnEditarTematica" title="Editar temáticas">
+    <img src="img/lapiz.png" alt="Editar">
+  </button>
+</div>
+
+<div id="tematicasSeleccionadasTexto" style="margin-top: 10px; font-size: 0.9rem; color: #666; text-align: left;">
+  Ninguna temática seleccionada
+</div>
+
+      <button id="btnComenzarJuego">Comenzar</button>
+      <button id="btnEditarNombres">Editar nombres</button>
+      
+      <!-- BOTÓN MULTIJUGADOR ONLINE CON ESTILO ROJO -->
+      <button id="btnMultijugador" style="background-color: #ff4757; color: white; font-weight: 700; box-shadow: 0 6px 12px rgba(255, 71, 87, 0.5); margin-top: 15px;">
+        🌐 Multijugador Online
+      </button>
+    </div>
+    <div id="pantalla-multijugador" style="display: none;"></div>
+
+<div id="pantalla-editar-nombres" style="display: none;">
+  <h2>Editar nombres</h2>
+
+  <!-- Contenedor con scroll -->
+  <div id="inputs-nombres-container">
+    <div id="inputs-nombres"></div>
+  </div>
+
+  <!-- Botones fijos -->
+  <div class="fixed-buttons">
+    <button id="btnGuardarNombres">Guardar</button>
+    <button id="btnCancelarEdicion">Cancelar</button>
+    <button id="btnEliminarNombres">Eliminar nombres guardados</button>
+  </div>
+</div>
+
+<div id="pantalla-editar-tematica" style="display: none;">
+  <h2>Editar temática</h2>
+  <p style="text-align:left; font-size:0.95rem; color:#444; margin-bottom:8px;">
+    Desmarca los famosos que NO quieras que aparezcan en esta temática.
+  </p>
+  <div id="lista-famosos-tematica" style="max-height:40vh; overflow:auto; text-align:left;"></div>
+
+  <button id="btnGuardarTematica">Guardar</button>
+  <button id="btnCancelarTematica">Cancelar</button>
+</div>
+
+<div id="pantalla-seleccionar-tematicas" style="display: none;">
+  <h2>Selecciona las temáticas</h2>
+  <p class="subtitle">Toca las temáticas que quieras incluir en el juego</p>
+  
+  <div id="lista-tematicas-cards" class="tematicas-grid">
+    <!-- Las tarjetas se generarán dinámicamente aquí -->
+  </div>
+
+  <div class="selected-counter">
+    <span id="contador-seleccionadas">0 temáticas seleccionadas</span>
+  </div>
+
+  <div class="fixed-buttons">
+    <button id="btnConfirmarTematicas" class="btn-primary">Confirmar selección</button>
+    <button id="btnCancelarTematicas" class="btn-secondary">Cancelar</button>
+  </div>
+</div>
+
+    <div id="pantalla-juego" style="display: none;"></div>
+  </div>
+</div>
+
+  <div class="modal-overlay" id="modal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+<div class="modal-content">
+  <h2 id="modalTitle">¿Cómo se juega?</h2>
+  <ol style="padding-left: 1.2em; font-size: 1.05rem; line-height: 1.5; color: #333;">
+    <li>
+      <strong>Prepará la partida</strong><br>
+      Elegí la cantidad de jugadores, cuántos serán impostores, la temática y la duración de la ronda.
+    </li>
+    <li>
+      <strong>Descubrí tu rol</strong><br>
+      Cuando sea tu turno, mirá la pantalla en secreto:<br>
+      - Si sos <span class="impostor">impostor</span>, inventá respuestas y tratá de no ser descubierto.<br>
+      - Si sos <span class="famoso">famoso</span>, recibirás el nombre o imagen de un personaje famoso: respondé siempre de forma coherente con ese personaje.
+    </li>
+    <li>
+      <strong>Pasá el teléfono</strong><br>
+      Después de ver tu rol, pasá el teléfono al siguiente jugador sin que nadie más lo vea.
+    </li>
+    <li>
+      <strong>Charla y deducción</strong><br>
+      Durante el tiempo de la ronda, hagan preguntas y respondan. El objetivo de los famosos es descubrir a los impostores; el de los impostores es confundirse entre los demás.
+    </li>
+    <li>
+      <strong>Votación</strong><br>
+      Al terminar el tiempo, todos señalan y dicen quién creen que es impostor. El que tenga más votos se elimina.
+    </li>
+    <li>
+      <strong>Fin y nueva ronda</strong><br>
+      Podés volver a jugar cambiando o no los roles. ¡Gana el equipo que logre cumplir su objetivo!
+    </li>
+  </ol>
+</div>
+    <div class="modal-footer">
+      <button id="btnCerrarModal">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Socket.IO para multijugador -->
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script>
+  // Conexión global para que todos los scripts puedan usar `socket`
+  window.socket = io("https://quien-miente-server.onrender.com", {
+    transports: ["websocket", "polling"]
+  });
+
+  window.socket.on("connect", () => {
+    console.log("✅ Conectado al servidor:", window.socket.id);
+  });
+
+  window.socket.on("connect_error", (err) => {
+    console.error("❌ Error de conexión Socket.IO:", err && err.message);
+  });
+
+  window.socket.on("disconnect", (reason) => {
+    console.log("⚠️ Desconectado:", reason);
+  });
+</script>
+
+<script src="famosos.js"></script>
+<script src="tematicas.js"></script>
+<script src="multiplayer.js"></script>
+<script src="script.js"></script>
+
+<script>
+// Agregar funcionalidad del botón multijugador
+document.addEventListener('DOMContentLoaded', function() {
+  const btnMultijugador = document.getElementById('btnMultijugador');
+  if (btnMultijugador) {
+    btnMultijugador.addEventListener('click', function() {
+      // Ocultar pantalla inicial
+      document.getElementById('pantalla-inicial').style.display = 'none';
+      
+      // Mostrar menú multijugador
+      multiplayerManager.showMultiplayerMenu();
+    });
+  }
+});
+</script>
+
+</body>
+</html>
