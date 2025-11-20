@@ -42,9 +42,7 @@ const famososPorTematica = {
   "Lucas Moura", "Felipe Melo", "Alex Sandro",
   "Renan Lodi", "Dani Alves"
 ],
-
-España: [
-  // LOS QUE YA TENÍAS
+  España: [
   "Andrés Iniesta", "Gerard Piqué", "Sergio Ramos", "Iker Casillas", "Raúl González",
   "Cesc Fàbregas", "David Silva", "Fernando Torres", "Santi Cazorla", "Jordi Alba",
   "Carles Puyol", "David Villa", "Fernando Llorente", "Álvaro Morata", "Pau Torres",
